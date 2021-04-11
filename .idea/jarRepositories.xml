@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="1fc64d88-f50d-4dae-b2be-6e894720d397" />
+      <option name="name" value="1fc64d88-f50d-4dae-b2be-6e894720d397" />
+      <option name="url" value="https://mariadb-java-client-2.7.2.jar" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="3fcedfae-8491-4e14-88f8-e91ae7b5ae84" />
+      <option name="name" value="3fcedfae-8491-4e14-88f8-e91ae7b5ae84" />
+      <option name="url" value="https://mysql-connector-java-8.0.23.jar" />
+    </remote-repository>
+  </component>
+</project>
