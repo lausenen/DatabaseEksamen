@@ -16,6 +16,7 @@ public class Run {
         Scanner scan = new Scanner(System.in);
         System.out.print("Indtast navnet på .csv filen: ");
         String FileName = scan.next();
+        scan.close();
         Path path = Paths.get("", "src", "main", "resources", FileName + ".csv");
         filePath = String.valueOf(path.toAbsolutePath());
 
