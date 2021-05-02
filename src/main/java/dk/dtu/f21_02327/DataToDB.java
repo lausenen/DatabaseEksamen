@@ -9,14 +9,14 @@ public class DataToDB {
 
     public void run(VaccinationsAftale aftale) {
 
-        //Lav ny connection
+        //Lav nyt Connector objekt
         Connector connector = new Connector();
         this.connector = connector;
 
-        //  Connection connection = connector.getConnection();
-        // PreparedStatement ps = getSelectCPRStatement();
 
         try {
+
+            //Opret ny connection
             Connection connection = connector.getConnection();
             PreparedStatement ps = getSelectCPRStatement();
 
@@ -41,14 +41,20 @@ public class DataToDB {
                 createBorger(aftale, cpr);
                 createAftale(aftale, cpr);
             }
+
             rs.close();
+
             connection.commit();
             connection.setAutoCommit(true);
+
             ps.close();
             connection.close();
+
         } catch (SQLException e) {
+
             System.out.println("Fejl i ResultSet, connection, commit eller borger statement");
             e.printStackTrace();
+
         }
 
     }
