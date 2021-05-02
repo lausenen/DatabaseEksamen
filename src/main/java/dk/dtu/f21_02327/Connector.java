@@ -18,22 +18,9 @@ class Connector {
     private static final String PASSWORD = "password";
 
 
-   // private Connection connection;
+    private Connection connection;
 
     Connector() {
-       /* try {
-            String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
-            connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }*/
-    }
-
-    public Connection getConnection(){
-        Connection connection = null;
-
         try {
             String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
             connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
@@ -42,6 +29,19 @@ class Connector {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public Connection getConnection(){
+       /* Connection connection = null;
+
+        try {
+            String url = "jdbc:mysql://" + HOST + ":" + PORT + "/" + DATABASE;
+            connection = DriverManager.getConnection(url, USERNAME, PASSWORD);
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }*/
         return connection;
     }
 

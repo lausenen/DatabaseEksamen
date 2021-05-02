@@ -5,15 +5,19 @@ import java.sql.*;
 public class DataToDB {
 
     //private Connector connector;
-    Connector connector = new Connector();
+    private Connector connector;
 
 
     public void run(VaccinationsAftale aftale) {
+        Connector connector = new Connector();
+        this.connector = connector;
+
         Connection connection = connector.getConnection();
         PreparedStatement ps = getSelectCPRStatement();
 
         try {
-            System.out.println(connection.isClosed());
+
+            //System.out.println(connection.isClosed());
 
             connection.setAutoCommit(false);
 
