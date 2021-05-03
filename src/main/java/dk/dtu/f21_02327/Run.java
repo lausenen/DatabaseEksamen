@@ -10,8 +10,10 @@ public class Run {
 
     public static void main(String[] args) {
 
-        String filePath;
         DataToDB DataToDB = new DataToDB();
+
+        String filePath;
+        DataToDBOld DataToDBOld = new DataToDBOld();
         IndlaesVaccinationsAftaler laeser = new IndlaesVaccinationsAftaler();
         Scanner scan = new Scanner(System.in);
         System.out.print("Indtast navnet på .csv filen: ");
@@ -21,12 +23,17 @@ public class Run {
         filePath = String.valueOf(path.toAbsolutePath());
 
         try {
-            //List<VaccinationsAftale> aftaler = laeser.indlaesAftaler("C:/Users/mikke/IdeaProjects/ManipulateUniversity/src/main/resources/vaccinationsaftaler.csv");
             List<VaccinationsAftale> aftaler = laeser.indlaesAftaler(filePath);
 
-            for (VaccinationsAftale aftale : aftaler) {
+           DataToDB.run(aftaler);
+
+          /*  for (VaccinationsAftale aftale : aftaler) {
                 DataToDB.run(aftale);
             }
+
+           */
+
+
         } catch (IOException e) {
             System.out.println("Filen findes ikke");
             e.printStackTrace();
