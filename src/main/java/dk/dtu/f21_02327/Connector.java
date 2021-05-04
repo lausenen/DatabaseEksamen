@@ -10,7 +10,7 @@ class Connector {
 
     private static final String HOST = "localhost";
     private static final int PORT = 3306;
-    private static final String DATABASE = "Vaccine";
+    private static final String DATABASE = "vaccineberedskabet";
     private static final String USERNAME = "user";
     private static final String PASSWORD = "password";
     private static final String CP = "utf8";

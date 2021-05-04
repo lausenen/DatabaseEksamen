@@ -65,7 +65,7 @@ public class DataToDB {
                 ps2.setString(1, cpr);
                 ResultSet rs = ps2.executeQuery();
                 //Tjek om borgeren allerede findes i databasen
-                if (!rs.isBeforeFirst()) {
+                if (!rs.next()) {
 
                     ps1.setString(1, cpr);
 
@@ -85,7 +85,7 @@ public class DataToDB {
                 ps3.setString(1, cpr);
                 ResultSet rs1 = ps3.executeQuery();
                 //Tjek om borgerens aftale allerede findes i databasen
-                if (!rs1.isBeforeFirst()) {
+                if (!rs1.next()) {
 
                     //Konverter datoen til SQL dato
                     Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
@@ -127,7 +127,7 @@ public class DataToDB {
     private PreparedStatement getSelectCPRStatement() {
         Connection connection = connector.getConnection();
         try {
-            select_cpr_stmt = connection.prepareStatement(SQL_SELECT_CPR, ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            select_cpr_stmt = connection.prepareStatement(SQL_SELECT_CPR);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
