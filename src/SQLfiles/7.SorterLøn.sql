@@ -1,0 +1,1 @@
+Select Medarbejder_ID, TItel, Løn from Medarbejder order by Løn desc;
