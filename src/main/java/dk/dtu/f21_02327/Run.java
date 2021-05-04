@@ -1,10 +1,7 @@
 package dk.dtu.f21_02327;
 
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 public class Run {
 
@@ -20,8 +17,8 @@ public class Run {
             //Indlæs filen
             List<VaccinationsAftale> aftaler = laeser.indlaesAftaler(filePath);
 
-            //Indlæs dataen til databasen
-            DataToDB.run(aftaler);
+            //Indlæs data til databasen
+            DataToDB.loadData(aftaler);
 
 
         } catch (IOException e) {
