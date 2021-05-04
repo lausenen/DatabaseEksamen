@@ -12,26 +12,16 @@ public class Run {
 
         DataToDB DataToDB = new DataToDB();
 
-        String filePath;
-        DataToDBOld DataToDBOld = new DataToDBOld();
         IndlaesVaccinationsAftaler laeser = new IndlaesVaccinationsAftaler();
-        Scanner scan = new Scanner(System.in);
-        System.out.print("Indtast navnet på .csv filen: ");
-        String FileName = scan.next();
-        scan.close();
-        Path path = Paths.get("", "src", "main", "resources", FileName + ".csv");
-        filePath = String.valueOf(path.toAbsolutePath());
+
+        String filePath ="C:/Users/mikke/IdeaProjects/ManipulateUniversity/src/main/resources/vaccinationsaftaler.csv";
 
         try {
+            //Indlæs filen
             List<VaccinationsAftale> aftaler = laeser.indlaesAftaler(filePath);
 
-           DataToDB.run(aftaler);
-
-          /*  for (VaccinationsAftale aftale : aftaler) {
-                DataToDB.run(aftale);
-            }
-
-           */
+            //Indlæs dataen til databasen
+            DataToDB.run(aftaler);
 
 
         } catch (IOException e) {

@@ -1,7 +1,6 @@
 package dk.dtu.f21_02327;
 
 
-
 import java.sql.*;
 import java.util.List;
 
@@ -24,13 +23,10 @@ public class DataToDB {
             Connection connection = connector.getConnection();
 
 
-            connection.setAutoCommit(false);
 
             createAftaleBorger(aftaler);
 
-
-            connection.commit();
-            connection.setAutoCommit(true);
+            //Luk connection
             connection.close();
 
         } catch (SQLException e) {
@@ -42,16 +38,19 @@ public class DataToDB {
 
     public void createAftaleBorger(List<VaccinationsAftale> aftaler) throws SQLException {
         String cpr;
+
         PreparedStatement ps3 = getSelectAftalerStatement();
         PreparedStatement ps2 = getSelectCPRStatement();
 
         PreparedStatement ps = getInsertAftalerStatement();
         PreparedStatement ps1 = getInsertBorgerStatement();
 
+
         try {
             for (VaccinationsAftale aftale : aftaler
             ) {
 
+                //Split navnet op i dets individuelle dele
                 String[] fullName = aftale.getNavn().split(" ");
 
 
@@ -62,47 +61,46 @@ public class DataToDB {
                     cpr = String.valueOf(aftale.getCprnr());
                 }
 
+
                 ps2.setString(1, cpr);
-                ps3.setString(1, cpr);
                 ResultSet rs = ps2.executeQuery();
-                if (rs.isBeforeFirst()) {
-                    rs.close();
-                    continue;
+                //Tjek om borgeren allerede findes i databasen
+                if (!rs.isBeforeFirst()) {
+
+                    ps1.setString(1, cpr);
+
+                    ps1.setString(2, fullName[0]);
+                    if (fullName.length == 2) {
+                        ps1.setNull(3, Types.VARCHAR);
+                    } else {
+                        ps1.setString(3, fullName[1]);
+                    }
+                    ps1.setString(4, fullName[fullName.length - 1]);
+                    ps1.setString(5, aftale.getVaccineType());
+                    ps1.executeUpdate();
                 }
-
-                ps1.setString(1, cpr);
-
-                ps1.setString(2, fullName[0]);
-
-
-                if (fullName.length == 2) {
-                    ps1.setNull(3, Types.VARCHAR);
-                } else {
-                    ps1.setString(3, fullName[1]);
-                }
-                ps1.setString(4, fullName[fullName.length - 1]);
-                ps1.setString(5, aftale.getVaccineType());
-
                 rs.close();
-                ps1.executeUpdate();
 
 
+                ps3.setString(1, cpr);
                 ResultSet rs1 = ps3.executeQuery();
+                //Tjek om borgerens aftale allerede findes i databasen
+                if (!rs1.isBeforeFirst()) {
 
-                if (rs1.isBeforeFirst()) {
-                    rs1.close();
-                    continue;
+                    //Konverter datoen til SQL dato
+                    Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
+
+                    ps.setString(1, cpr);
+                    ps.setTimestamp(2, SqlTimeStamp);
+                    ps.setString(3, aftale.getLokation());
+                    ps.executeUpdate();
+
                 }
-
-                Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
-
-                ps.setString(1, cpr);
-                ps.setTimestamp(2, SqlTimeStamp);
-                ps.setString(3, aftale.getLokation());
-                ps.executeUpdate();
+                rs1.close();
 
             }
-        }catch(SQLException e){
+        } catch (SQLException e) {
+            System.out.println("Fejl i statements");
             e.printStackTrace();
         }
         ps.close();
@@ -153,11 +151,11 @@ public class DataToDB {
     private static final String SQL_SELECT_AFTALER = "SELECT Borger_ID FROM Aftale WHERE Borger_ID = ?";
     private PreparedStatement select_aftaler_stmt = null;
 
-    private PreparedStatement getSelectAftalerStatement(){
+    private PreparedStatement getSelectAftalerStatement() {
         Connection connection = connector.getConnection();
-        try{
+        try {
             select_aftaler_stmt = connection.prepareStatement(SQL_SELECT_AFTALER);
-        }catch(SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return select_aftaler_stmt;
