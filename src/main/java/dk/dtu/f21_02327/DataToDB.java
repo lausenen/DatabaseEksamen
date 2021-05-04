@@ -10,7 +10,7 @@ public class DataToDB {
     private Connector connector;
 
 
-    public void run(List<VaccinationsAftale> aftaler) {
+    public void loadData(List<VaccinationsAftale> aftaler) {
 
         //Lav nyt Connector objekt
         Connector connector = new Connector();
@@ -21,7 +21,6 @@ public class DataToDB {
 
             //Opret ny connection
             Connection connection = connector.getConnection();
-
 
 
             createAftaleBorger(aftaler);

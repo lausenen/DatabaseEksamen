@@ -17,8 +17,8 @@ public class Run {
             //Indlæs filen
             List<VaccinationsAftale> aftaler = laeser.indlaesAftaler(filePath);
 
-            //Indlæs dataen til databasen
-            DataToDB.run(aftaler);
+            //Indlæs data til databasen
+            DataToDB.loadData(aftaler);
 
 
         } catch (IOException e) {
