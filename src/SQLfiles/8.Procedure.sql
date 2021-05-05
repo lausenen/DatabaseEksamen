@@ -7,10 +7,10 @@ CREATE PROCEDURE Tilfoej_Ansvarlig_Medarbejder (IN vMedarbejder_ID VARCHAR(10),
 IN vTidspunkt DATETIME, 
 IN vBorger_ID VARCHAR(10))
 BEGIN
-IF (SELECT Vaccine_Type FROM Certificering 
-WHERE Medarbejder_ID = vMedarbejder_ID AND Vaccine_Type = (SELECT Vaccine_Type FROM Borger WHERE Borger.Borger_ID = vBorger_ID)) != true THEN
+IF (SELECT EXISTS (select * FROM Certificering
+WHERE Medarbejder_ID = vMedarbejder_ID AND Vaccine_Type = (SELECT Vaccine_Type FROM Borger WHERE Borger.Borger_ID = vBorger_ID))) THEN
 UPDATE Aftale SET Medarbejder_ID = vMedarbejder_ID
-WHERE Tidspunkt = vTidspunkt AND Borger_ID = vBorger_ID;
+where Tidspunkt = vTidspunkt AND Borger_ID = vBorger_ID;
 ELSE
 SIGNAL SQLSTATE 'HY000'
 SET MYSQL_ERRNO = 2021, 
