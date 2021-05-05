@@ -37,7 +37,7 @@ INSERT Lokation VALUES
 ('Nakskov','Æbletoften', 7);
 
 INSERT Vaccine_Beholdning VALUES 
-('Covaxx','Kbh',0),
+('Covaxx','Kbh',10000),
 ('Covaxx','Hill',5000),
 ('Covaxx','Aarhus',10000),
 ('Covaxx','Kolding',5000),

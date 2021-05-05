@@ -20,7 +20,7 @@ END$$
 DELIMITER ;
 
 -- Eksempel brugt til at teste proceduren
-INSERT INTO Medarbejder VALUES (1000000001,'Deltid',18000, 'Vitus', null, 'Vilmer',20210101);
+/*INSERT INTO Medarbejder VALUES (1000000001,'Deltid',18000, 'Vitus', null, 'Vilmer',20210101);
 INSERT INTO Ansat VALUES (1000000001, 'Odense');
 SELECT* FROM Ansat;
 
@@ -29,3 +29,5 @@ INSERT INTO Certificering VALUES (1000000001, 'Covaxx',20210501000000);
 Call Skift_ansvarlig_Medarbejder(1000000001, 20210427120000, 1234567891);
 
 SELECT* FROM Aftale;
+
+ */
