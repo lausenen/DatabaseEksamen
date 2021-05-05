@@ -1,5 +1,5 @@
 USE Vaccineberedskabet;
-DROP procedure IF EXISTS Skift_Ansvarlig_Medarbejder;
+DROP procedure IF EXISTS Tilfoej_Ansvarlig_Medarbejder;
 
 DELIMITER $$
 USE Vaccineberedskabet $$
@@ -24,9 +24,9 @@ DELIMITER ;
 INSERT INTO Ansat VALUES (1000000001, 'Odense');
 SELECT* FROM Ansat;
 
-Call Skift_ansvarlig_Medarbejder(1000000001, 20210427120000, 1234567891);
+Call Tilfoej_ansvarlig_Medarbejder(1000000001, 20210427120000, 1234567891);
 INSERT INTO Certificering VALUES (1000000001, 'Covaxx',20210501000000);
-Call Skift_ansvarlig_Medarbejder(1000000001, 20210427120000, 1234567891);
+Call Tilfoej_ansvarlig_Medarbejder(1000000001, 20210427120000, 1234567891);
 
 SELECT* FROM Aftale;
 
