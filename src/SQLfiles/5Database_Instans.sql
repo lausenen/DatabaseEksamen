@@ -107,6 +107,10 @@ SELECT DISTINCT Vaccine_Type, Count(Borger_ID) AS TOTAL
 FROM Aftale NATURAL JOIN Borger
 GROUP BY Vaccine_Type;
 
-
+CREATE VIEW Aftale_Pris_View AS
+SELECT Aftale.Borger_ID, Aftale.Tidspunkt, Aftale.Bynavn, Aftale.Medarbejder_ID,
+Aftale.Vaccination_Foretaget, Borger.Vaccine_Type, Vaccine.Pris
+FROM Aftale NATURAL JOIN Borger NATURAL JOIN Vaccine
+WHERE Aftale.Borger_ID = Borger.Borger_ID and Vaccine.Vaccine_Type =  Borger.Vaccine_Type;
 
   show tables;

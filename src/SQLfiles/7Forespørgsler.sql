@@ -6,26 +6,21 @@ FROM Aftale NATURAL JOIN Vaccine NATURAL JOIN Borger GROUP BY Vaccine_Type;
 
 /*Økonomisk afregning*/
 -- 7.2.1 nr. 1
- SELECT Vaccine_Type, Pris, (SELECT sum(Vaccination_Foretaget)
- WHERE Vaccination_Foretaget = TRUE ) AS Antal,
- (SELECT ((SELECT sum(Vaccination_Foretaget)
- WHERE Vaccination_Foretaget = TRUE) * pris))
- AS Samlet_Pris
- FROM Aftale NATURAL JOIN Vaccine NATURAL JOIN Borger GROUP BY Vaccine_Type;
+SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
+FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
+GROUP BY Vaccine_Type
+HAVING Total_Pris > 0;
  
  -- 7.2.1 nr. 2
-select Vaccine_Type, Pris, (select sum(Vaccination_Foretaget) from  Aftale 
-where Vaccination_Foretaget = true and month(Tidspunkt) = month(current_date())) 
-as Antal, 
-(select ((select sum(Vaccination_Foretaget) from  Aftale 
-where Vaccination_Foretaget = true and month(Tidspunkt) = month(current_date())) * Pris))
-as Samlet_Pris
-from  Aftale natural join Vaccine natural join Borger group by Vaccine_Type;
+SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
+FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true and MONTH(Tidspunkt) = MONTH(current_date())
+GROUP BY Vaccine_Type
+HAVING Total_Pris > 0;
 
 /* Total afregning */
 -- 7.2.2
 
- SELECT SUM(Antal) AS TOTAL_ANTAL, SUM(Samlet_Pris) AS TOTAL_PRIS FROM Vaccine_Budget;
+SELECT SUM(Antal) AS TOTAL_ANTAL, SUM(Samlet_Pris) AS TOTAL_PRIS FROM Vaccine_Budget;
 
 /* Undersøge certificeret personale på given lokation */
 -- 7.3
