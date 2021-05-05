@@ -101,6 +101,52 @@ return VTotalAntal;
 end //
 DELIMITER ;
 
+/* Daglig rapport til sundhedsmyndighederne - antal daglige vaccinationer */
+-- 8.7
+set global event_scheduler=on;
+
+delimiter //
+create procedure afregning_daglig()
+begin
+SELECT Vaccine_Type, COUNT(Vaccination_Foretaget) AS Antal
+FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
+AND DAY(Tidspunkt) = DAY(current_date())
+GROUP BY Vaccine_Type
+HAVING Antal > 0;
+end //
+delimiter ;
+
+#drop procedure afregning_daglig;
+
+create event if not exists daglig_vaccinations_rapport
+on schedule every 1 day
+on completion preserve
+do call afregning_daglig;
+
+/* Månedlig økonomisk rapport */
+-- 8.8
+set global event_scheduler=on;
+
+delimiter //
+create procedure afregning_maeneder()
+begin
+SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris FROM Aftale_Pris_View
+WHERE Vaccination_Foretaget = true and MONTH(Tidspunkt) = MONTH(current_date())
+GROUP BY Vaccine_Type HAVING Total_Pris > 0;
+end //
+delimiter ;
+
+#drop procedure afregning_maeneder;
+
+create event if not exists maenedlig_oekonomisk_rapport
+on schedule every 1 month
+on completion preserve
+do call afregning_maeneder;
+
+
+
+
+
 
 
 
