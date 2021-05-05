@@ -113,4 +113,10 @@ Aftale.Vaccination_Foretaget, Borger.Vaccine_Type, Vaccine.Pris
 FROM Aftale NATURAL JOIN Borger NATURAL JOIN Vaccine
 WHERE Aftale.Borger_ID = Borger.Borger_ID and Vaccine.Vaccine_Type =  Borger.Vaccine_Type;
 
+CREATE VIEW Vaccine_Budget AS
+SELECT Vaccine_Type,COUNT(Vaccination_Foretaget) AS Antal, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
+FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
+GROUP BY Vaccine_Type
+HAVING Total_Pris > 0;
+
   show tables;

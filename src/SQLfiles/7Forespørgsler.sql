@@ -6,13 +6,13 @@ FROM Aftale NATURAL JOIN Vaccine NATURAL JOIN Borger GROUP BY Vaccine_Type;
 
 /*Økonomisk afregning*/
 -- 7.2.1 nr. 1
-SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
+SELECT Vaccine_Type,COUNT(Vaccination_Foretaget) AS Antal, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
 FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
 GROUP BY Vaccine_Type
 HAVING Total_Pris > 0;
  
  -- 7.2.1 nr. 2
-SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
+SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget) AS Antal) * Pris AS Total_Pris
 FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true and MONTH(Tidspunkt) = MONTH(current_date())
 GROUP BY Vaccine_Type
 HAVING Total_Pris > 0;
