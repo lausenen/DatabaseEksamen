@@ -1,8 +1,10 @@
 /* Daglig rapport */
 -- 7.1
-SELECT Vaccine_Type, (SELECT sum(Vaccination_Foretaget)
-WHERE Vaccination_Foretaget = TRUE AND DAY(Tidspunkt) = DAY(current_date())) AS sumVaccines 
-FROM Aftale NATURAL JOIN Vaccine NATURAL JOIN Borger GROUP BY Vaccine_Type;
+SELECT Vaccine_Type, COUNT(Vaccination_Foretaget) AS Antal
+FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
+AND DAY(Tidspunkt) = DAY(current_date())
+GROUP BY Vaccine_Type
+HAVING Antal > 0;
 
 /*Økonomisk afregning*/
 -- 7.2.1 nr. 1
