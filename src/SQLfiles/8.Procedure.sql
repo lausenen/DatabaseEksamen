@@ -3,7 +3,7 @@ DROP procedure IF EXISTS Tilfoej_Ansvarlig_Medarbejder;
 
 DELIMITER $$
 USE Vaccineberedskabet $$
-CREATE PROCEDURE Skift_Ansvarlig_Medarbejder (IN vMedarbejder_ID VARCHAR(10),
+CREATE PROCEDURE Tilfoej_Ansvarlig_Medarbejder (IN vMedarbejder_ID VARCHAR(10),
 IN vTidspunkt DATETIME, 
 IN vBorger_ID VARCHAR(10))
 BEGIN
