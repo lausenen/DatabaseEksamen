@@ -7,15 +7,9 @@ GROUP BY Vaccine_Type
 HAVING Antal > 0;
 
 /*
--- NB! så matcher nedenstående insert-Tidspunkt på >>sekundet<< nedenstående update-Tidspunkt.
--- For at UPDATE-statementet kan opdatere den rigtige aftale, skal alle statements altså eksekverens samtidig
 INSERT INTO Borger VALUES (0000000001, 'Vilmer', 'Borg', 'Villadsen', 'Covaxx');
-INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn) VALUES (0000000001, current_timestamp() ,'Kbh');
+INSERT INTO Aftale VALUES (0000000001, current_timestamp(),'Kbh',1212996743, 1);
 SELECT* FROM Aftale;
-
-SET SQL_SAFE_UPDATES = 0;
--- NB så matcher nedenstående update på sekundet ovenstående insert-Tidspunkt.
-UPDATE Aftale SET Vaccination_Foretaget = true WHERE Borger_ID = 0000000001 AND Tidspunkt = current_timestamp();
 */
 
 
@@ -28,11 +22,9 @@ HAVING Total_Pris > 0;
 /*
 INSERT INTO Borger VALUES (0000000002, 'Sonny', null, 'Cher', 'Blast3000');
 INSERT INTO Borger VALUES (0000000003, 'Hanna', null, 'Hansen', 'Blast3000');
-INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn, Vaccination_Foretaget) VALUES (0000000002, current_timestamp() ,'Kbh',1);
-INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn, Vaccination_Foretaget) VALUES (0000000003, current_timestamp() ,'Kbh',1);
-SELECT* FROM Aftale;
-
-SELECT* FROM Aftale;
+INSERT INTO Aftale VALUES (0000000002, current_timestamp(), 'Kbh', '1212996743', 1);
+INSERT INTO Aftale VALUES (0000000003, current_timestamp(),'Kbh', '1212996743',1);
+SELECT Borger_ID, Vaccination_Foretaget FROM Aftale;
 */
 
  -- 7.2.1 nr. 2
