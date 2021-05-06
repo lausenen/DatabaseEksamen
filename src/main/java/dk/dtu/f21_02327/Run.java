@@ -11,7 +11,7 @@ public class Run {
 
         IndlaesVaccinationsAftaler laeser = new IndlaesVaccinationsAftaler();
 
-        String filePath ="C:/Users/mikke/IdeaProjects/ManipulateUniversity/src/main/resources/vaccinationsaftaler.csv";
+        String filePath ="";
 
         try {
             //Indlæs filen
