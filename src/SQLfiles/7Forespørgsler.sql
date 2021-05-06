@@ -22,7 +22,7 @@ HAVING Total_Pris > 0;
 /* Total afregning */
 -- 7.2.2
 
-SELECT SUM(Antal) AS TOTAL_ANTAL, SUM(Samlet_Pris) AS TOTAL_PRIS FROM Vaccine_Budget;
+SELECT SUM(Antal) AS TOTAL_ANTAL, SUM(Total_Pris) AS TOTAL_PRIS FROM Vaccine_Budget;
 
 /* Undersøge certificeret personale på given lokation */
 -- 7.3
