@@ -93,7 +93,7 @@ public class DataToDB {
                 Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
 
                 //Tjek alle aftaler for borgeren, og se om den nye aftale matcher en forrig aftale
-                while(rs1.next()){
+                while(rs1.next() && nyAftale){
                     if(rs1.getTimestamp(TIDSPUNKT).equals(SqlTimeStamp)){
                         nyAftale = false;
                     }
