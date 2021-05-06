@@ -8,6 +8,10 @@ public class DataToDB {
 
 
     private Connector connector;
+    private boolean nyAftale;
+
+
+    private static final String TIDSPUNKT = "tidspunkt";
 
 
     public void loadData(List<VaccinationsAftale> aftaler) {
@@ -48,6 +52,7 @@ public class DataToDB {
         try {
             for (VaccinationsAftale aftale : aftaler
             ) {
+                nyAftale = true;
 
                 //Split navnet op i dets individuelle dele
                 String[] fullName = aftale.getNavn().split(" ");
@@ -83,11 +88,20 @@ public class DataToDB {
 
                 ps3.setString(1, cpr);
                 ResultSet rs1 = ps3.executeQuery();
-                //Tjek om borgerens aftale allerede findes i databasen
-                if (!rs1.next()) {
 
-                    //Konverter datoen til SQL dato
-                    Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
+                //Konverter datoen til SQL dato
+                Timestamp SqlTimeStamp = new java.sql.Timestamp(aftale.getAftaltTidspunkt().getTime());
+
+                //Tjek alle aftaler for borgeren, og se om den nye aftale matcher en forrig aftale
+                while(rs1.next()){
+                    if(rs1.getTimestamp(TIDSPUNKT).equals(SqlTimeStamp)){
+                        nyAftale = false;
+                    }
+                }
+
+
+                //Tjek om borgerens aftale allerede findes i databasen
+                if (nyAftale) {
 
                     ps.setString(1, cpr);
                     ps.setTimestamp(2, SqlTimeStamp);
@@ -95,6 +109,8 @@ public class DataToDB {
                     ps.executeUpdate();
 
                 }
+
+
                 rs1.close();
 
             }
@@ -147,7 +163,7 @@ public class DataToDB {
         return insert_aftaler_stmt;
     }
 
-    private static final String SQL_SELECT_AFTALER = "SELECT Borger_ID FROM Aftale WHERE Borger_ID = ?";
+    private static final String SQL_SELECT_AFTALER = "SELECT * FROM Aftale WHERE Borger_ID = ?";
     private PreparedStatement select_aftaler_stmt = null;
 
     private PreparedStatement getSelectAftalerStatement() {
