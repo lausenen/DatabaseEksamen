@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ManipulateUniversity.iml" filepath="$PROJECT_DIR$/ManipulateUniversity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ManipulateDB.iml" filepath="$PROJECT_DIR$/ManipulateDB.iml" />
     </modules>
   </component>
 </project>
