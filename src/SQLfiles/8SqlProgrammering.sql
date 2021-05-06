@@ -86,6 +86,7 @@ BEGIN
 END$$
 DELIMITER ;
 
+-- select Medarbejder_ID, Anciennitet( Medarbejder_ID) as Anciennitet from medarbejder;
 
 /* Vaccine antal funktion */
 -- 8.6
@@ -100,6 +101,8 @@ from vaccine_beholdning where Vaccine_Type = VType;
 return VTotalAntal;
 end //
 DELIMITER ;
+
+-- select Vaccine_Type ,VaccineAntal( Vaccine_type) as  VaccineAntal from vaccine_beholdning group by Vaccine_Type;
 
 /* Daglig rapport til sundhedsmyndighederne - antal daglige vaccinationer */
 -- 8.7
@@ -123,6 +126,8 @@ on schedule every 1 day
 on completion preserve
 do call afregning_daglig;
 
+-- call afregning_daglig;
+
 /* Månedlig økonomisk rapport */
 -- 8.8
 set global event_scheduler=on;
@@ -142,6 +147,8 @@ create event if not exists maenedlig_oekonomisk_rapport
 on schedule every 1 month
 on completion preserve
 do call afregning_maeneder;
+
+-- call afregning_maeneder;
 
 
 
