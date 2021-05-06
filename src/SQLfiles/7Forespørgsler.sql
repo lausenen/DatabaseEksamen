@@ -6,6 +6,19 @@ AND DAY(Tidspunkt) = DAY(current_date())
 GROUP BY Vaccine_Type
 HAVING Antal > 0;
 
+/*
+-- NB! så matcher nedenstående insert-Tidspunkt på >>sekundet<< nedenstående update-Tidspunkt.
+-- For at UPDATE-statementet kan opdatere den rigtige aftale, skal alle statements altså eksekverens samtidig
+INSERT INTO Borger VALUES (0000000001, 'Vilmer', 'Borg', 'Villadsen', 'Covaxx');
+INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn) VALUES (0000000001, current_timestamp() ,'Kbh');
+SELECT* FROM Aftale;
+
+SET SQL_SAFE_UPDATES = 0;
+-- NB så matcher nedenstående update på sekundet ovenstående insert-Tidspunkt.
+UPDATE Aftale SET Vaccination_Foretaget = true WHERE Borger_ID = 0000000001 AND Tidspunkt = current_timestamp();
+
+*/
+
 /*Økonomisk afregning*/
 -- 7.2.1 nr. 1
 SELECT Vaccine_Type,COUNT(Vaccination_Foretaget) AS Antal, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris
