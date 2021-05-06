@@ -1,9 +1,13 @@
-/* Denne SQL-fil indeholder alle create table-statements samt triggers, funktioner og procedurer*/
+/* Denne fil indeholder alle vores create database, create table-statements, views
+ * samt procedure, triggers, funktioner og events
+ * - gruppe 12
+ */
 
 /* CREATE DATABASE og CREATE TABLE-statements*/
 CREATE DATABASE IF NOT EXISTS Vaccineberedskabet;
 USE vaccineberedskabet;
 
+DROP TABLE IF EXISTS Aftale_Pris_View;
 DROP TABLE IF EXISTS Aftale;
 DROP TABLE IF EXISTS Ansat;
 DROP TABLE IF EXISTS Borger;
@@ -12,6 +16,26 @@ DROP TABLE IF EXISTS Vaccine_beholdning;
 DROP TABLE IF EXISTS Medarbejder;
 DROP TABLE IF EXISTS Lokation;
 DROP TABLE IF EXISTS Vaccine;
+
+-- View
+DROP VIEW IF EXISTS Aftale_Pris_View;
+DROP VIEW IF EXISTS Vaccine_Budget;
+DROP VIEW IF EXISTS Fuldtidsmedarbejdere;
+DROP VIEW IF EXISTS Samlede_Vaccinationer;
+
+-- Triggers
+DROP TRIGGER IF EXISTS Foer_Aftale;
+DROP TRIGGER IF EXISTS Vaccinebeholdning_Efter_Insert;
+DROP TRIGGER IF EXISTS Foer_Ansaettelse;
+
+-- Procedures
+DROP procedure IF EXISTS Tilfoej_Ansvarlig_Medarbejder;
+DROP procedure IF EXISTS Afregning_daglig;
+DROP procedure IF EXISTS Afregning_maaneder;
+
+-- Function
+DROP FUNCTION IF EXISTS Anciennitet;
+DROP FUNCTION IF EXISTS Vaccineantal;
 
 CREATE TABLE Medarbejder(
   Medarbejder_ID VARCHAR(10) NOT NULL,
@@ -139,7 +163,7 @@ MESSAGE_TEXT = 'Medarbejdere kan max være ansat 3 lokationer!';
 END IF;
 END$$
 
-/* Opdaterer vaccinebeholdningen efter Borgers vaccineaftale er overst�et 
+/* Opdaterer vaccinebeholdningen efter Borgers vaccineaftale er overstået 
 / vaccination er foretaget */
 -- 8.2
 DELIMITER $$
@@ -178,9 +202,6 @@ END$$
 /* Procedure - er den tildelte ansvarlige medarbejder certificeret? */
 -- 8.4
 
-USE Vaccineberedskabet;
-DROP procedure IF EXISTS Tilfoej_Ansvarlig_Medarbejder;
-
 DELIMITER $$
 USE Vaccineberedskabet $$
 CREATE PROCEDURE Tilfoej_Ansvarlig_Medarbejder (IN vMedarbejder_ID VARCHAR(10),
@@ -215,6 +236,7 @@ DELIMITER ;
 
 /* Vaccine antal funktion */
 -- 8.6
+DROP FUNCTION IF EXISTS VaccineAntal;
 DELIMITER //
 Create function
 VaccineAntal (VType varchar(10))
@@ -242,8 +264,6 @@ HAVING Antal > 0;
 end //
 delimiter ;
 
-#drop procedure afregning_daglig;
-
 create event if not exists daglig_vaccinations_rapport
 on schedule every 1 day
 on completion preserve
@@ -251,10 +271,10 @@ do call afregning_daglig;
 
 /* Månedlig økonomisk rapport */
 -- 8.8
-set global event_scheduler=on;
+set global event_scheduler = on;
 
 delimiter //
-create procedure afregning_maeneder()
+create procedure afregning_maaneder()
 begin
 SELECT Vaccine_Type, (COUNT(Vaccination_Foretaget)) * Pris AS Total_Pris FROM Aftale_Pris_View
 WHERE Vaccination_Foretaget = true and MONTH(Tidspunkt) = MONTH(current_date())
