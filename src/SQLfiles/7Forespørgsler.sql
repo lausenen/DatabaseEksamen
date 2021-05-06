@@ -50,3 +50,6 @@ Select Borger_ID, Medarbejder_ID, Bynavn, Tidspunkt from Aftale order by Tidspun
 
 
 
+
+
+
