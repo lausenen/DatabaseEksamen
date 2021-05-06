@@ -16,8 +16,8 @@ SELECT* FROM Aftale;
 SET SQL_SAFE_UPDATES = 0;
 -- NB så matcher nedenstående update på sekundet ovenstående insert-Tidspunkt.
 UPDATE Aftale SET Vaccination_Foretaget = true WHERE Borger_ID = 0000000001 AND Tidspunkt = current_timestamp();
-
 */
+
 
 /*Økonomisk afregning*/
 -- 7.2.1 nr. 1
@@ -26,6 +26,12 @@ FROM Aftale_Pris_View WHERE Vaccination_Foretaget = true
 GROUP BY Vaccine_Type
 HAVING Total_Pris > 0;
 /*
+INSERT INTO Borger VALUES (0000000002, 'Sonny', null, 'Cher', 'Blast3000');
+INSERT INTO Borger VALUES (0000000003, 'Hanna', null, 'Hansen', 'Blast3000');
+INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn, Vaccination_Foretaget) VALUES (0000000002, current_timestamp() ,'Kbh',1);
+INSERT INTO Aftale (Borger_ID, Tidspunkt, Bynavn, Vaccination_Foretaget) VALUES (0000000003, current_timestamp() ,'Kbh',1);
+SELECT* FROM Aftale;
+
 SELECT* FROM Aftale;
 */
 
